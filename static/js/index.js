@@ -100,7 +100,7 @@ function switchExpResult(type) {
         img.src = 'static/images/paper/More_exp_CNN.png';
         setToggleActive(btnCnn, btnTransformer);
     } else {
-        img.src = 'static/images/paper/More_exp_transformer.png';
+        img.src = 'static/images/paper/More_exp_Transformer.png';
         setToggleActive(btnTransformer, btnCnn);
     }
 }

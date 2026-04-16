@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="MCPNet++: An Interpretable Classifier via Multi-Level Concept Prototypes">
+  <meta name="keywords" content="MCPNet++, XAI, Interpretable AI, Concept Prototypes">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCPNet++: An Interpretable Classifier via Multi-Level Concept Prototypes</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!-- ── Hero / Title ─────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MCPNet++: An Interpretable Classifier via Multi-Level Concept Prototypes</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://eddie221.github.io/">Bor-Shiun Wang</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://chienyiwang.github.io/">Chien-Yi Wang</a><sup>2*</sup>,</span>
+            <span class="author-block"><a href="https://walonchiu.github.io/">Wei-Chen Chiu</a><sup>1*</sup></span>
+          </div>
+          <div class="is-size-6 publication-authors" style="margin-top: 0.3rem;">
+            <span class="author-block"><sup>*</sup>Equal Advising</span>
+          </div>
+          <div class="is-size-5 publication-authors" style="margin-top: 0.3rem;">
+            <span class="author-block"><sup>1</sup>National Yang Ming Chiao Tung University,</span>
+            <span class="author-block"><sup>2</sup>Amazon</span>
+          </div>
+
+          <div class="publication-links" style="margin-top: 1rem;">
+            <span class="link-block">
+              <a href="https://ieeexplore.ieee.org/document/11474497"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://github.com/eddie221/MCPNet_PP"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fab fa-github"></i></span>
+                <span>Code</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Teaser ────────────────────────────────────────────────────────────── -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/paper/teaser.png" height="60%" alt="Teaser" style="display: block; margin: 0 auto;">
+      <h2 class="subtitle has-text-centered">
+        ProtoPFormer generates explanations only from the final layer, typically capturing a single high-level concept
+        from activated patches, whereas MCPNet++ provides multi-level explanations from low- to high-level features
+        and further summarizes these concepts with LLMs for more human-friendly interpretation.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- ── Abstract ──────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          Post-hoc and inherently interpretable methods have shown great success in uncovering the inner workings of
+          black-box models, whether by examining them after training or by explicitly designing for interpretability.
+          While these approaches effectively narrow the semantic gap between a model's latent space and human
+          understanding, they typically extract only <b>high-level semantics from the model's final feature map</b>.
+          As a result, they provide a <b>limited perspective on the decision-making process</b>. We argue that
+          explanations lacking insight into both <b>lower- and mid-level semantics</b> cannot be considered fully
+          faithful or genuinely useful. To address this issue, we introduce the
+          <b>Multi-Level Concept Prototypes Classifier (MCPNet)</b>, which offers a more holistic interpretation by
+          drawing on information from <b>multiple levels within the model</b>. Rather than relying on predefined
+          concept labels, MCPNet <b>autonomously discovers meaningful concepts from feature maps</b>. To increase
+          versatility, we further propose <b>MCPNet++</b>, which can be seamlessly applied to both
+          <b>CNN and transformer backbones</b>, allowing it to learn meaningful concepts from their respective
+          features. Building on these learned concepts, we also introduce an <b>LLM-based method</b> to bridge the
+          gap between these concepts and <b>human perception</b>. Experimental results show that MCPNet++ provides
+          <b>more comprehensive explanations without sacrificing model performance</b>, with the discovered concepts
+          <b>aligning closely with human understanding</b>.
+        </div>
+      </div>
+    </div>
+    <div class="content" style="overflow-x: auto;">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>MCPNet</th>
+            <th>MCPNet++</th>
+            <th>ProtoPNet</th>
+            <th>ProtoPFormer</th>
+            <th>BotCL</th>
+            <th>Concept Bottleneck Model</th>
+            <th>VCC</th>
+            <th>CRAFT***</th>
+            <th>TCAV</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-label">Explanation Type</td>
+            <td>Inherently</td>
+            <td>Inherently</td>
+            <td>Inherently</td>
+            <td>Inherently</td>
+            <td>Inherently</td>
+            <td>Inherently</td>
+            <td>Post-hoc</td>
+            <td>Post-hoc</td>
+            <td>Post-hoc</td>
+          </tr>
+          <tr>
+            <td class="row-label">Explanation Scale</td>
+            <td>Multi-level</td>
+            <td>Multi-level</td>
+            <td>Single-level</td>
+            <td>Single-level</td>
+            <td>Single-level</td>
+            <td>Single-level</td>
+            <td>Multi-level</td>
+            <td>Single-level</td>
+            <td>Single-level</td>
+          </tr>
+          <tr>
+            <td class="row-label">w/o Concept Labels</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-no">&#10007;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-no">&#10007;**</td>
+          </tr>
+          <tr>
+            <td class="row-label">Available for CNN<br>and Transformers</td>
+            <td class="ct-yes">&#10003;*</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;*</td>
+            <td class="ct-no">&#10007;</td>
+            <td class="ct-yes">&#10003;*</td>
+            <td class="ct-yes">&#10003;*</td>
+            <td class="ct-yes">&#10003;</td>
+            <td class="ct-yes">&#10003;*</td>
+            <td class="ct-yes">&#10003;*</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.8rem; color: #666; text-align: left; margin-top: 0.5rem;">
+        * Applicable to CNN backbones only (not transformers) in original work. &nbsp;
+        ** TCAV requires user-defined concept examples. &nbsp;
+        *** CRAFT is a post-hoc method applied after training.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Methods ───────────────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Methods</h2>
+
+        <!-- Overview -->
+        <h3 class="title is-4">Overview</h3>
+        <div class="content has-text-justified">
+          <p>MCPNet++ extracts multi-level concept features from different layers, enforces diverse and
+          class-consistent concepts, and aggregates them for interpretable classification.</p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="static/images/paper/overview.png" height="60%" alt="Overview">
+        </div>
+
+        <!-- CKA Loss -->
+        <h3 class="title is-4">Center Kernel Alignment (CKA) Loss</h3>
+        <div class="content has-text-justified">
+          <p>Leveraging the CKA similarity metric, the CKA loss reduces similarity between concept segments within
+          the same layer, encouraging diverse representations at a shared level of abstraction. Although it does not
+          explicitly control what each segment learns, it serves as a constraint that discourages redundancy. This
+          promotes multi-perspective representations, offering a more comprehensive basis for interpretation.</p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="static/images/paper/CKA.png" width="90%" alt="CKA Loss">
+        </div>
+
+        <!-- CCC Loss -->
+        <h3 class="title is-4">Contrastive Class-wise Concept (CCC) Loss</h3>
+        <div class="content has-text-justified">
+          <p>Motivated by the intuition that images from the same class tend to share similar concept compositions,
+          the CCC loss encourages MCP features within the same class to be more similar while separating those from
+          different classes. Implemented with a contrastive learning objective, it helps organize the concept space
+          according to class-level patterns. This improves the consistency of learned representations and provides a
+          stronger basis for classification and interpretation.</p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="static/images/paper/CCC.png" width="90%" alt="CCC Loss">
+        </div>
+
+        <!-- Layer-wise Dropout -->
+        <h3 class="title is-4">Layer-wise Dropout</h3>
+        <div class="content has-text-justified">
+          <p>We introduce layer-wise dropout to reduce over-reliance on MCP features from any single layer during
+          training. By randomly dropping the features from one layer at a time, the model is encouraged to utilize
+          information from multiple semantic levels rather than depending only on the most discriminative one. This
+          helps the classifier learn more balanced representations across low-, mid-, and high-level concepts.</p>
+        </div>
+
+        <!-- Concept Captions -->
+        <h3 class="title is-4">Concept Captions</h3>
+        <div class="content has-text-justified">
+          <p>To bridge the gap between learned concepts and human understanding, we introduce a captioning workflow
+          using large language models (LLMs). For each concept, we collect high-response images and their
+          corresponding activation patches, which implicitly represent its semantic meaning. These visual cues are
+          then provided to the LLM to generate concise descriptions of the underlying concept. Instead of assigning
+          a single fixed label, the model outputs multiple candidate descriptions, offering a more flexible and
+          human-friendly interpretation of learned concepts.</p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="static/images/paper/concept_caption.png" width="70%" alt="Concept Captions">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Experiments ─────────────────────────────────────────────────── -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experiments</h2>
+
+        <!-- Main Quantitative Results -->
+        <h3 class="title is-4">Main Quantitative Results</h3>
+        <div class="content has-text-justified">
+          <p>MCPNet++ achieves competitive accuracy across both CNN (ResNet50) and transformer (DeiT-B-16) backbones
+          while providing multi-level explanations. Compared to existing interpretable methods, it maintains strong
+          performance across datasets, demonstrating that richer multi-level representations can be learned without
+          degrading classification accuracy.</p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="static/images/paper/Performance.png" width="80%" alt="Performance table">
+        </div>
+
+        <!-- Explanation Samples -->
+        <h3 class="title is-4">Explanation Samples</h3>
+        <div class="content has-text-justified">
+          <p>MCPNet employs multi-scale concept explanations as the foundation for accurate classification.
+          In particular, the high responses to both Grizzly Bear and buffalo classes in terms of high-level concept
+          would lead to confusion if the classification is based solely on the high-level responses, while such
+          confusion can be resolved with the incorporation of low-level concept responses. Moreover, even without a
+          direct concept match in the image, MCPNet accurately interprets the image using the constructed MCP
+          distribution based on the holistic consideration over concept responses across multiple scales.</p>
+        </div>
+        <div class="content has-text-centered">
+          <div style="margin-bottom: 1rem;">
+            <button id="btn-cnn" class="toggle-btn toggle-btn-active" onclick="switchExpResult('cnn')">CNN</button>
+            <button id="btn-transformer" class="toggle-btn" onclick="switchExpResult('transformer')">Transformer</button>
+          </div>
+          <img id="exp-result-img" src="static/images/paper/More_exp_CNN.png" width="90%" alt="Explanation Samples">
+        </div>
+
+        <!-- Relation between Caption and Visualization -->
+        <h3 class="title is-4">Relation between Caption and Visualization</h3>
+        <div class="content has-text-justified">
+          <p>We present the concept response difference between the original and edited images to illustrate how
+          visual changes are reflected in the learned concept representations. Hover over each image to highlight
+          its corresponding concept responses.</p>
+        </div>
+        <div class="has-text-centered" style="margin-bottom: 1rem;">
+          <button id="rcv-btn-cnn" class="toggle-btn toggle-btn-active" onclick="switchRcvBackbone('cnn')">CNN</button>
+          <button id="rcv-btn-transformer" class="toggle-btn" onclick="switchRcvBackbone('transformer')">Transformer</button>
+        </div>
+        <div id="rcv-container">
+          <div class="cf-image-block">
+            <div class="cf-label">Original Image</div>
+            <img id="rcv-original" src="static/images/ConceptResponse/CNN_before.png" alt="Original Image" class="cf-img" style="border: 3px solid #888;">
+          </div>
+          <div class="cf-chart-block">
+            <div class="cf-chart-title">Concept Responses</div>
+            <div id="rcv-chart"></div>
+            <div class="cf-legend">
+              <span><span class="cf-legend-swatch" style="background:#e6b84a;"></span>Original</span>
+              <span><span class="cf-legend-swatch" style="background:#aaaaaa;"></span>Edited</span>
+            </div>
+          </div>
+          <div class="cf-arrow-block">
+            <div class="cf-arrow">&#8594;</div>
+            <div id="rcv-arrow-label" class="cf-arrow-label"></div>
+          </div>
+          <div class="cf-image-block">
+            <div class="cf-label">Edited Image</div>
+            <img id="rcv-edited" src="static/images/ConceptResponse/CNN_after.png" alt="Edited Image" class="cf-img" style="border: 3px solid #888;">
+          </div>
+        </div>
+
+        <!-- Counterfactual Result -->
+        <h3 class="title is-4">Counterfactual Result</h3>
+        <div class="content has-text-justified">
+          <p>To evaluate counterfactual reasoning, we compare concept responses between an original misclassified
+          image and its counterfactually edited counterpart. Hover over each image to highlight its corresponding
+          concept responses.</p>
+        </div>
+        <div class="has-text-centered" style="margin-bottom: 1rem;">
+          <button id="cf-btn-cnn" class="toggle-btn toggle-btn-active" onclick="switchCfBackbone('cnn')">CNN</button>
+          <button id="cf-btn-transformer" class="toggle-btn" onclick="switchCfBackbone('transformer')">Transformer</button>
+        </div>
+        <div id="counterfactual-container">
+          <div class="cf-image-block">
+            <div class="cf-label">Original Image</div>
+            <img id="cf-original" src="static/images/Counterfact/CNN_Wrong.png" alt="Original Image" class="cf-img cf-img-wrong">
+            <div id="cf-pred-wrong" class="cf-pred cf-pred-wrong">&#10007; Prediction: Fox</div>
+          </div>
+          <div class="cf-chart-block">
+            <div class="cf-chart-title">Concept Responses</div>
+            <div id="cf-chart"></div>
+            <div class="cf-legend">
+              <span><span class="cf-legend-swatch" style="background:#e6b84a;"></span>Original</span>
+              <span><span class="cf-legend-swatch" style="background:#aaaaaa;"></span>Edited</span>
+            </div>
+          </div>
+          <div class="cf-arrow-block">
+            <div class="cf-arrow">&#8594;</div>
+            <div id="cf-arrow-label" class="cf-arrow-label">Turn Fur Grey</div>
+          </div>
+          <div class="cf-image-block">
+            <div class="cf-label">Edited Image</div>
+            <img id="cf-edited" src="static/images/Counterfact/CNN_Correct.png" alt="Edited Image" class="cf-img cf-img-correct">
+            <div id="cf-pred-correct" class="cf-pred cf-pred-correct">&#10003; Prediction: Wolf</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BibTeX ─────────────────────────────────────────────────────────────── -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@ARTICLE{wang2026MCPNetPP,
+  author  = {Wang, Bor-Shiun and Wang, Chien-Yi and Chiu, Wei-Chen},
+  journal = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  title   = {MCPNet++: Interpretable Classification Models via Multi-Level Concept Prototypes},
+  year    = {2026},
+  pages   = {1--18},
+  doi     = {10.1109/TPAMI.2026.3680506}
+}</code></pre>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8 has-text-centered">
+        <p>Website template adapted from <a href="https://nerfies.github.io">Nerfies</a>.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

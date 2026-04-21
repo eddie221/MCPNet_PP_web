@@ -111,7 +111,7 @@ function switchExpResult(type) {
         cnn: {
             beforeImg:   'static/images/ConceptResponse/CNN_before.png',
             afterImg: 'static/images/ConceptResponse/CNN_after.png',
-            arrowLabel: 'Turn Fur Grey',
+            arrowLabel: 'Make it stand on water',
             concepts: [
                 { captions: ['Water', 'Blue', 'Aquatic Environment'], original:  -0.02, edited:  0.8 },
                 { captions: ['Greenery/Grass/Plants', 'Animals', 'Outdoor/Natural Environment'],               original:  0.08, edited:  0.04 },
@@ -121,7 +121,7 @@ function switchExpResult(type) {
         transformer: {
             beforeImg:   'static/images/ConceptResponse/Transformer_before.png',
             afterImg: 'static/images/ConceptResponse/Transformer_after.png',
-            arrowLabel: 'Turn Fur Grey',
+            arrowLabel: 'Turn skin into red',
             concepts: [
                 { captions: ['Colorful Obejcts(red)', 'Environmental Context', 'Animal Companionship'], original:  0.01, edited:  0.5 },
                 { captions: ['Fur Texture', 'Vibrant Colors(pink)', 'Compansionship or Clustering'],               original:  0.55, edited:  0.8 },

@@ -123,8 +123,8 @@ function switchExpResult(type) {
             afterImg: 'static/images/ConceptResponse/Transformer_after.png',
             arrowLabel: 'Turn skin into red',
             concepts: [
-                { captions: ['Colorful Obejcts(red)', 'Environmental Context', 'Animal Companionship'], original:  0.01, edited:  0.5 },
-                { captions: ['Fur Texture', 'Vibrant Colors(pink)', 'Compansionship or Clustering'],               original:  0.55, edited:  0.8 },
+                { captions: ['Colorful Objects(red)', 'Environmental Context', 'Animal Companionship'], original:  0.01, edited:  0.5 },
+                { captions: ['Fur Texture', 'Vibrant Colors(pink)', 'Companionship or Clustering'],               original:  0.55, edited:  0.8 },
                 { captions: ['Aquatic Environment', "Dynamic Movement", 'Black and White Coloration'],      original:  0.6, edited:  0.4 },
             ],
         },
